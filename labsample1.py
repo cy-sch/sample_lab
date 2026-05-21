@@ -14,13 +14,17 @@ import csv
 #              or None if workouts is empty              #
 ##########################################################
 def get_longest_workout(workouts):
-    longest = None
+    
+    workDic = {}
+    longest = 0
+    for i in range(len(workouts) -1):
+        if workouts[i]['duration'] > longest:
+            longest = workouts[i]['duration']
+            workDic = {'date': workouts[i]['date'],'activity': workouts[i]['activity'],'duration':workouts[i]['duration']}
+    else: 
+        workDic = None 
+    return workDic
 
-    # Add your implementation from here
-    #HINT: Loop through workouts and compare durations
-
-
-    return longest
 
 ##################################################################
 # Function to calculate total duration of all workouts           #
@@ -33,8 +37,8 @@ def get_longest_workout(workouts):
 def calc_total_duration(workouts):
     total = 0
 
-    # Add your implementation from here
-    #HINT: start with this code: for workout in workouts:
+    for i in range(len(workouts) - 1):
+        total += workouts[i]['duration']
 
 
     return total
@@ -49,6 +53,11 @@ def calc_total_duration(workouts):
 ##################################################################
 def calc_average_duration(workouts):
     average = 0
+    total = 0
+
+    for i in range(len(workouts) - 1):
+        total += workouts[i]['duration']
+    average = total/len(workouts)
 
     # Add your implementation from here
     #HINT: Use calc_total_duration(workouts) and len(workouts)
@@ -159,7 +168,7 @@ def main():
 
         # Load CSV file database
         workouts = load_csv()
-
+  
         if choice == '1':
             display_all_records(workouts)
         elif choice == '2':
@@ -168,7 +177,7 @@ def main():
             # Get the longest workout
             longest = get_longest_workout(workouts)
 
-            if longest:
+            if longest :
                 print("\nLongest Workout")
                 print("=" * 50)
                 print(f"Date: {longest['date']}")
@@ -176,8 +185,8 @@ def main():
                 print(f"Duration: {longest['duration']:.0f} minutes")
                 print("=" * 50)
             else:
+                print (len(workouts))
                 print("\nNo workouts found!")
-
         elif choice == 'Q':
             print("\nThank you for using Fitness Tracker!")
             break
