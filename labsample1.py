@@ -15,13 +15,13 @@ import csv
 ##########################################################
 def get_longest_workout(workouts):
     
-    workDic = {}
+    workDic = { }
     longest = 0
-    for i in range(len(workouts) -1):
+    for i in range(len(workouts) - 1):
         if workouts[i]['duration'] > longest:
             longest = workouts[i]['duration']
             workDic = {'date': workouts[i]['date'],'activity': workouts[i]['activity'],'duration':workouts[i]['duration']}
-    else: 
+    if (workDic == {}):
         workDic = None 
     return workDic
 
@@ -36,8 +36,8 @@ def get_longest_workout(workouts):
 ##################################################################
 def calc_total_duration(workouts):
     total = 0
-
-    for i in range(len(workouts) - 1):
+    
+    for i in range(len(workouts) ):
         total += workouts[i]['duration']
 
 
@@ -55,7 +55,7 @@ def calc_average_duration(workouts):
     average = 0
     total = 0
 
-    for i in range(len(workouts) - 1):
+    for i in range(len(workouts) ):
         total += workouts[i]['duration']
     average = total/len(workouts)
 
@@ -110,7 +110,7 @@ def load_csv():
         print("Error: workouts.csv file not found!")
     except Exception as e:
         print(f"Error loading CSV: {e}")
-
+    
     return workouts
 
 
@@ -168,7 +168,7 @@ def main():
 
         # Load CSV file database
         workouts = load_csv()
-  
+        
         if choice == '1':
             display_all_records(workouts)
         elif choice == '2':
